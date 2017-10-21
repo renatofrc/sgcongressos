@@ -1,0 +1,24 @@
+{
+	"name" : "rasfdeveloper/events",
+	"authors" : [
+		{
+			"name" : "Renato Franco",
+			"email" : "rasfdeveloper@gmail.com"
+		}
+	],
+
+	"require": {
+		"phpmailer/phpmailer" : "5.2.22",
+		"slim/slim" : "2.0",
+		"rain/raintpl" : "3.0.0",
+		"mercadopago/sdk": "0.5.2",
+		"developercielo/api-3.0-php": "^1.0"
+	},
+
+	"autoload": {
+		"psr-4":{
+			"SG\\": "core\\src\\"
+		}
+	}
+
+}

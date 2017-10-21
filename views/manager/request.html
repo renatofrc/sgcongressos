@@ -1,0 +1,71 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Dados bancários
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/manager"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/manager/financial">Financial</a></li>
+    
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+      <div class="row">
+        <div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-yellow">
+              {loop="$bank"}
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">{$value.holder_name}</h3>
+              <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                
+                <li><a href="#">Banco <span class="pull-right badge">{$value.bank_name}</span></a></li>
+                <li><a href="#">Agência<span class="pull-right badge">{$value.agency}</span></a></li>
+                <li><a href="#">Conta <span class="pull-right badge">{$value.account}</span></a></li>
+                <li><a href="#">CPF <span class="pull-right badge">{$value.cpf_cnpj}</span></a></li>
+                <li><a href="#">Telefone <span class="pull-right badge">{$value.phone}</span></a></li>
+               
+              </ul>
+              {loop="$event"}
+              <form role="form" action="/manager/financial/{$value.idevent}/request" method="post">
+              {/loop}
+                <input type="hidden" name="holder_name" value="{$value.holder_name}">
+                <input type="hidden" name="bank_name" value="{$value.bank_name}">
+                <input type="hidden" name="agency" value="{$value.agency}">
+                <input type="hidden" name="account" value="{$value.account}">
+                <input type="hidden" name="cpf_cnpj" value="{$value.cpf_cnpj}">
+                <input type="hidden" name="phone" value="{$value.phone}">
+                <input type="hidden" name="create_user_id" value="{$value.create_user_id}">
+                 {loop="$event"}
+                <input type="hidden" name="price" value="{$value.price}">
+                <input type="hidden" name="idevent" value="{$value.idevent}">
+                {/loop}
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-success">Solicitar depósito</button>
+                </div>
+              </form>
+              {/loop}
+           
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+        <!-- /.col -->
+        
+      </div>
+      <!-- /.row -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

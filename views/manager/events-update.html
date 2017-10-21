@@ -1,0 +1,171 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Dados do Evento
+  </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-success">
+        <div class="box-header with-border">
+         
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" action="/manager/events/{$event.idevent}" method="post" enctype="multipart/form-data">
+
+
+          <div class="box-body">
+            <div class="form-group">
+              <label for="desname">Nome do Evento</label>
+              <input type="text" class="form-control" id="desname" name="event_name" class="form-control input-lg" value="{function="utf8_encode($event.event_name)"}">
+            </div>
+
+            <div class="form-group">
+              <label>Descrição</label>
+                <textarea class="form-control" rows="3" placeholder="" name="description" >{function="utf8_encode($event.description)"}</textarea>
+            </div>
+
+             <div class="form-group">
+              <label>Site do evento</label>
+              <div class="input-group">
+                <span class="input-group-addon">sgcongressos.com/event/</span>
+                <input type="text" class="form-control" name="site" value="{$event.site}">
+              </div>
+            </div>
+         
+
+              <div class="form-group">
+                <label>Data inicial:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="date1" name="initial_date" value="{$event.initial_date}">
+                </div>
+                <!-- /.input group -->
+              </div>
+
+              <div class="form-group">
+                <label>Data final:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="date2" name="end_date" value="{$event.end_date}">
+                </div>
+                <!-- /.input group -->
+              </div>
+
+              <div class="form-group">
+                <label>Inicio das inscrições:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="regs1" name="regs_start" value="{$event.regs_start}">
+                </div>
+                <!-- /.input group -->
+              </div>
+
+              <div class="form-group">
+                <label>Fim das inscrições:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="regs2" name="regs_end" value="{$event.regs_end}">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <div class="form-group">
+                <label for="desname">Limite de vagas</label>
+                <input type="text" class="form-control" id="vacancies" name="vacancies" value="{$event.vacancies}" class="form-control input-lg" type="text" placeholder="Deixe vazio para vagas ilimitadas">
+              </div>
+
+            <div class="form-group">
+              <label for="desname">Local</label>
+              <input type="text" class="form-control" id="" name="local"  value="{function="utf8_encode($event.local)"}" class="form-control input-lg" type="text" placeholder="Ex: Universidade de São Paulo">
+            </div>
+
+            <div class="form-group">
+              <label for="desname">Endereço</label>
+              <input type="text" class="form-control" id="" name="address" value="{function="utf8_encode($event.address)"}" class="form-control input-lg" type="text" placeholder="Rua, número, bairro, cidade, estado, país">
+            </div>
+
+            <div class="form-group">
+              <label for="desname">CEP</label>
+              <input type="text" class="form-control" id="" name="cep" value="{$event.cep}" class="form-control input-lg" type="text">
+            </div>
+
+            <div class="form-group">
+              <label for="price">Preço da inscrição</label>
+              <input type="text" class="form-control" id="" name="price" value="{$event.price}" class="form-control input-lg" type="text">
+            </div>
+
+            <div class="form-group">
+              <label>Facebook do evento</label>
+              <div class="input-group">
+                <span class="input-group-addon">facebook.com/</span>
+                <input type="text" class="form-control" placeholder="Deixe vazio se não houver" name="fb_id" value="{$event.fb_id}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Instagram do evento</label>
+              <div class="input-group">
+                <span class="input-group-addon">instagram.com/</span>
+                <input type="text" class="form-control" placeholder="deixe vazio se não houver" name="instagram_id" value="{$event.instagram_id}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="file">Foto</label>
+              <input type="file" class="form-control" id="file" name="file" value="{$event.desphoto}">
+              <div class="box box-widget">
+                <div class="box-body">
+                  <img class="img-responsive" id="image-preview" src="{$event.desphoto}" >
+                </div>
+              </div>
+            </div>
+           
+           
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-success">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
+document.querySelector('#file').addEventListener('change', function(){
+  
+    var file = new FileReader();
+
+    file.onload = function() {
+      
+      document.querySelector('#image-preview').src = file.result;
+
+    }
+
+  file.readAsDataURL(this.files[0]);
+
+});
+</script>
