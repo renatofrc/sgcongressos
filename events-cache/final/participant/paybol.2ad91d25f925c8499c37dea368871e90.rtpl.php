@@ -1,17 +1,14 @@
-<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<script type="text/javascript">
- // public_key_production APP_USR-ef82489e-82c7-41dd-b898-d8c288f52222 
- // public_key_Sandbox TEST-596f0b96-2abc-4603-949f-9135613fd3f3
-Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
-</script>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+<script type="text/javascript"> Mercadopago.setPublishableKey("TEST-1990beeb-1564-4fe6-9438-45deb7d3b988");</script>
 
- <li class="dropdown user user-menu">
+<!-- User Account Menu -->
+          <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
               <img src="/res/admin/dist/img/avatar5.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">{$participant.pname}</span>
+              <span class="hidden-xs"><?php echo htmlspecialchars( $participant["pname"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -20,7 +17,7 @@ Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
 
                 <p>
                   
-                  <small>Membro desde {$participant.dtregister}</small>
+                  <small>Membro desde <?php echo htmlspecialchars( $participant["dtregister"], ENT_COMPAT, 'UTF-8', FALSE ); ?></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -29,11 +26,11 @@ Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
               <li class="user-footer">
 
                 <div class="pull-left">
-                  <a href="/event/{$event.site}/panel/{$participant.idparticipant}" class="btn btn-default btn-flat">Editar dados</a>
+                  <a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/<?php echo htmlspecialchars( $participant["idparticipant"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-default btn-flat">Editar dados</a>
                 </div>
                 
                 <div class="pull-right">
-                  <a href="/event/{$event.site}/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -58,7 +55,7 @@ Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
       <ul class="sidebar-menu">
       
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/event/{$event.site}/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/event/{$event.site/panel/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
         <li><a href="#"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
@@ -69,49 +66,38 @@ Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
     <!-- /.sidebar -->
   </aside>
 
-
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Formas de pagamento
+      Home
     </h1>
     <ol class="breadcrumb">
-      <li><a href="/event/{$event.site}/panel"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-dashboard"></i> Home</a></li>
     </ol>
   </section>
 
   <!-- Main content -->
-  <section class="content">
+   <section class="content">
 
 
-    <div class="row">
+  <div class="row">
 
-      <div class="col-md-8">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-yellow">
-         
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Escolha sua forma de pagamento</h3>
-              <h5 class="widget-user-desc"></h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                
-                <li><a href="/event/{$event.site}/ticket">Boleto<p class="pull-right ">Clique aqui</p></a></li>
-                <li><a href="/event/{$event.site}/card">Cartão de crédito<p class="pull-right ">Clique aqui</p></a></li>
-              
+    <div class="col-md-12">
+      <div class="box box-success">
+        <div class="box-header with-border">
+
+
+
+
                
-              </ul>   
-           
-            </div>
-          </div>
+                  <div class="box-footer">
+                    <a href="<?php echo htmlspecialchars( $pay, ENT_COMPAT, 'UTF-8', FALSE ); ?>">GERAR</a>
+                  </div>
+
+            
         </div>
-      
-
+      </div>
     </div>
-
+ </div>
 </section>
-</div>

@@ -53,7 +53,7 @@
       
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="/event/{$event.site/panel/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
         <li><a href="#"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
@@ -165,22 +165,7 @@
         
 
         
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <!-- END ALERTS AND CALLOUTS -->
-    
-      
-
-
-      
-
-      
-        
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
-      <!-- END TYPOGRAPHY -->
+     
 
     </section>
   <!-- /.content -->

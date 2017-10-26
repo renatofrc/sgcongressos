@@ -11,6 +11,7 @@ class Message extends Model {
 	const ERROR = "Error";
 	const ERROR_REGISTER = "ErrorRegister";
 	const REGISTER_SUCCESS = "RegisterSuccess";
+	const SUCCESS = "Success";
 
 		public static function setError($msg)
 	{
@@ -31,10 +32,35 @@ class Message extends Model {
 
 	}
 
+	public static function setSuccess($msg)
+	{
+
+		$_SESSION[Message::SUCCESS] = $msg;
+
+	}
+
+	public static function getSuccess()
+	{
+
+		$msg = (isset($_SESSION[Message::SUCCESS]) && $_SESSION[Message::SUCCESS]) ? $_SESSION[Message::SUCCESS] : '';
+
+		Message::clearSuccess();
+
+		return $msg;
+
+	}
+
 	public static function clearError()
 	{
 
 		$_SESSION[Message::ERROR] = NULL;
+
+	}
+
+	public static function clearSuccess()
+	{
+
+		$_SESSION[Message::SUCCESS] = NULL;
 
 	}
 
