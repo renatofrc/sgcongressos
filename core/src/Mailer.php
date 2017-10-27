@@ -57,6 +57,15 @@ class Mailer {
 		//Set the encryption system to use - ssl (deprecated) or tls
 		$this->mail->SMTPSecure = 'tls';
 
+		//SMTP options
+		$this->mail->SMTPOptions = array(
+		    'ssl' => array(
+		        'verify_peer' => false,
+		        'verify_peer_name' => false,
+		        'allow_self_signed' => true
+		    )
+		);
+
 		//Whether to use SMTP authentication
 		$this->mail->SMTPAuth = true;
 
@@ -81,6 +90,8 @@ class Mailer {
 		//Read an HTML message body from an external file, convert referenced images to embedded,
 		//convert HTML into a basic plain-text alternative body
 		$this->mail->msgHTML($html);
+
+		$this->mail->CharSet = 'UTF-8';
 
 		//Replace the plain text body with one created manually
 		$this->mail->AltBody = 'This is a plain-text message body';

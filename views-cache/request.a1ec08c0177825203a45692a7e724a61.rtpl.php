@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -418,17 +418,17 @@
                           </tr>
                         </table>
                       
-                          <p>Nome: {$name}</p>
-                          <p>CPF/CNPJ: {$cpf_cnpj}</p>
-                          <p>Banco: {$bank_name}</p>
-                          <p>Agência: {$agency}</p>
-                          <p>Conta: {$account}</p>
-                          <p>Valor : {$value}</p>
+                          <p>Nome: <?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>CPF/CNPJ: <?php echo htmlspecialchars( $cpf_cnpj, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>Banco: <?php echo htmlspecialchars( $bank_name, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>Agência: <?php echo htmlspecialchars( $agency, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>Conta: <?php echo htmlspecialchars( $account, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>Valor : <?php echo htmlspecialchars( $value, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
                           <br>
                           <p>Contato: </p>
                           <br>
-                          <p>E-mail: {$email}</p>
-                          <p>Telefone: {$phone}</p>
+                          <p>E-mail: <?php echo htmlspecialchars( $email, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>Telefone: <?php echo htmlspecialchars( $phone, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
 
                         
                         <table class="body-signature-block">

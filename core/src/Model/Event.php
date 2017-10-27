@@ -24,6 +24,20 @@ class Event extends Model {
 
 	}
 
+	public static function listById($idevent)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_event WHERE idevent = :idevent", 
+			array(
+				":idevent" => $idevent
+			));
+
+		return $results;
+
+	}
+
 	public static function totalSubs($id)
 	{
 
@@ -54,6 +68,33 @@ class Event extends Model {
 
 	}
 
+	public static function availableMoney($event_id)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT SUM(total_amount) as available_money FROM tb_payment WHERE event_id = :event_id AND status = 'approved'", array(
+			":event_id" => $event_id
+
+			));
+
+		return $results;
+
+	}
+
+	public static function confirmedPayment($event_id)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_payment WHERE event_id = :event_id AND status = 'approved'", array(
+			":event_id" => $event_id
+
+			));
+
+		return count($results);
+
+	}
 	
 
 	public static function checkList($list)

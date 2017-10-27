@@ -37,7 +37,7 @@
                
               </ul>
               <?php $counter2=-1;  if( isset($event) && ( is_array($event) || $event instanceof Traversable ) && sizeof($event) ) foreach( $event as $key2 => $value2 ){ $counter2++; ?>
-              <form role="form" action="/manager/financial/<?php echo htmlspecialchars( $value2["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/request" method="post">
+              <form role="form" action="/manager/financial/request/<?php echo htmlspecialchars( $value2["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
               <?php } ?>
                 <input type="hidden" name="holder_name" value="<?php echo htmlspecialchars( $value1["holder_name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 <input type="hidden" name="bank_name" value="<?php echo htmlspecialchars( $value1["bank_name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -47,7 +47,7 @@
                 <input type="hidden" name="phone" value="<?php echo htmlspecialchars( $value1["phone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 <input type="hidden" name="create_user_id" value="<?php echo htmlspecialchars( $value1["create_user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                  <?php $counter2=-1;  if( isset($event) && ( is_array($event) || $event instanceof Traversable ) && sizeof($event) ) foreach( $event as $key2 => $value2 ){ $counter2++; ?>
-                <input type="hidden" name="price" value="<?php echo htmlspecialchars( $value2["price"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+               
                 <input type="hidden" name="idevent" value="<?php echo htmlspecialchars( $value2["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 <?php } ?>
                 <div class="box-footer">

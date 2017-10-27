@@ -22,9 +22,6 @@
                  <thead>
                 <tr>
                   <th>Evento</th>
-                  <th>Total de Cadastros</th>
-                  <th>Pagamentos Confirmados</th>
-                  <th>Valor Disponível</th>
                   <th>#</th>
   
                 </tr>
@@ -33,10 +30,7 @@
                  <?php $counter1=-1;  if( isset($event) && ( is_array($event) || $event instanceof Traversable ) && sizeof($event) ) foreach( $event as $key1 => $value1 ){ $counter1++; ?>
                 <tr>
                   <td><?php echo utf8_encode($value1["event_name"]); ?></td>
-                  <td><?php echo htmlspecialchars( $value1["subscribes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                  <td></td>
-                  <td></td>
-                  <td><p> <a href="/manager/financial/<?php echo htmlspecialchars( $value1["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Solicitar Depósito</a></p></td>
+                  <td><p> <a href="/manager/financial/request/<?php echo htmlspecialchars( $value1["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Clique aqui</a></p></td>
                 </tr>  
                 </tbody>
                 <?php } ?>

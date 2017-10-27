@@ -37,7 +37,7 @@
                
               </ul>
               {loop="$event"}
-              <form role="form" action="/manager/financial/{$value.idevent}/request" method="post">
+              <form role="form" action="/manager/financial/request/{$value.idevent}" method="post">
               {/loop}
                 <input type="hidden" name="holder_name" value="{$value.holder_name}">
                 <input type="hidden" name="bank_name" value="{$value.bank_name}">
@@ -47,7 +47,7 @@
                 <input type="hidden" name="phone" value="{$value.phone}">
                 <input type="hidden" name="create_user_id" value="{$value.create_user_id}">
                  {loop="$event"}
-                <input type="hidden" name="price" value="{$value.price}">
+               
                 <input type="hidden" name="idevent" value="{$value.idevent}">
                 {/loop}
                 <div class="box-footer">

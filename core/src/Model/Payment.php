@@ -59,7 +59,6 @@ class Payment {
 					));
 
 					$mailer->send();
-
 					
 
 				}
@@ -110,17 +109,6 @@ class Payment {
 
 	}
 
-	// public static function listCards()
-	// {
-
-	// 	$mp = new mercadopago ("TEST-5867712708748536-102318-8e0a1f4afd3e74af14c7824d1d52b080__LD_LA__-203534313");
-
-
-	// 	$payment = $mp->get ("/v1/payments/2");
-
-	// 	print_r ($payment);
-
-	// }
 
 	public function ticketPay($date_of_expiration, $first_name, $last_name, $cpf, $email,
 	 $street_name, $neighborhood, $street_number, $city, $state, $cep, $amount, $participant_id, $event_id)
@@ -225,7 +213,7 @@ class Payment {
 	{
 
 		$mp = new mercadopago 
-		("APP_USR-5867712708748536-102318-4df4b4d803b41b8b9ba7a5e8d3da758d__LD_LB__-203534313");
+		("APP_USR-5867712708748536-102517-db9a877d6ddcc170d8fb2953723748bc__LB_LC__-203534313");
 
 		$sql = new Sql();
 
@@ -242,24 +230,29 @@ class Payment {
 
 		$payment = $mp->get('/v1/payments/'.$payment_id);
 
+
 		
-		foreach ($payment as $key => $value) {
+		foreach ($payment as $key => $value) 
+		{
 
 			$status = $value['status'];
 					
 		}
 
-
-		// if($status == 'approved')
-		// {
-
-		// 	$results = $sql->("UPDATE tb_")
-
-		// } -> Continuando aqui
+		var_dump($status);
 
 
-		
+		if($status == 'approved')
+		{
 
+			$results = $sql->query("CALL sp_payment_approved (:pidparticipant)", 
+				array(
+				":pidparticipant" => $iduser
+				));
+
+			return $results;
+
+		}
 		
 
 	}

@@ -214,6 +214,8 @@ $app->get("/event/:site/login", function($site) {
 
  	$event = $events->listEventData($site);
 
+ 	Payment::checkPayment($participant->getidparticipant());
+
  	$results = Event::checkList($event);
 
  	$data = $results[0];
@@ -491,10 +493,6 @@ $app->post("/event/:site/ticket", function($site) {
 
 	}
 
-	
-	
-	
-
 
 
 });
@@ -519,13 +517,13 @@ $app->post("/event/:site/card", function($site) {
  	$site
  	);
 
-	// if($results == 201)
-	// {
-	// 	Message::setSuccess("Sua solicitação de pagamento foi enviada, verifique seu e-mail em alguns instantes.");
-	// 	header('Location: /event/'.$site.'/payment');
-	// 	exit;
+	if($results == 201)
+	{
+		Message::setSuccess("Sua solicitação de pagamento foi enviada, verifique seu e-mail em alguns instantes.");
+		header('Location: /event/'.$site.'/payment');
+		exit;
 
-	// }
+	}
 
 
 });
@@ -540,18 +538,9 @@ $app->get("/event/:site/tests", function($site) {
 
 	$results = Payment::checkPayment($idparticipant);
 
-	 var_dump($results);
-
+	var_dump($results);
 
 });
-
-// $app->get("/event/:site/paymentmethods", function($site) {
-
-// 	Payment::PaymentMethods();
-
-
-// });
-
 
 
  $app->get("/event/:site/logout", function($site) { 

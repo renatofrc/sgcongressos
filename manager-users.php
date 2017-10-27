@@ -276,7 +276,7 @@ $app->get("/manager/participants/:idevent", function($idevent) {
 
 		$participants = new Participant();
 
-		$participant = Participant::listAllSubs($idevent);
+		$participant = Participant::listAll($idevent);
 
 		$page->setTpl("participants-event", [
 			'participant' => $participant
@@ -318,7 +318,7 @@ $app->get("/manager/financial", function() {
 	$iduser = $user->getiduser();
 
 	$event = Event::listAll($iduser);
-
+	
 	$page = new PageManager();
 
 	$page->setTpl("financial", [
@@ -327,7 +327,35 @@ $app->get("/manager/financial", function() {
 
 });
 
-$app->get("/manager/financial/:idevent", function($idevent) {
+$app->get("/manager/financial/request/:idevent", function($idevent) {
+
+	User::verifyLogin();
+
+	$user = User::getFromSession();
+
+	$iduser = $user->getiduser();
+
+	$event = Event::listById($idevent);
+
+	$data = $event[0];
+
+	$availableMoney = Event::availableMoney($idevent);
+
+	$data2 = $availableMoney[0];
+
+	$confirmedPayment = Event::confirmedPayment($idevent);
+
+	$page = new PageManager();
+
+	$page->setTpl("financial-event", [
+		'event' => $data,
+		'money' => $data2,
+		'confirmedPayment' => $confirmedPayment
+	]);
+
+});
+
+$app->get("/manager/financial/request/:idevent/bank", function($idevent) {
 
 	User::verifyLogin();
 
@@ -345,12 +373,14 @@ $app->get("/manager/financial/:idevent", function($idevent) {
 
 		$page->setTpl("request", [
 			'bank' => $verifyBank,
-			'event' => $event
+			'event' => $event,
+			'messageSuccess' => Message::getSuccess(),
+			'messageError' => Message::getError()
 		]);
 
 	} else{
 
-		$page = new PageManager();
+	$page = new PageManager();
 
 	$page->setTpl("account", [
 		'event' => $event,
@@ -375,7 +405,7 @@ $app->get("/manager/financial/:idevent", function($idevent) {
 
 });
 
-$app->post("/manager/financial/:idevent", function($idevent) {
+$app->post("/manager/financial/request/:idevent/bank", function($idevent) {
 
 	User::verifyLogin();
 
@@ -438,7 +468,7 @@ $app->post("/manager/financial/:idevent", function($idevent) {
 
 });
 
-$app->post("/manager/financial/:idevent/request", function($idevent) {
+$app->post("/manager/financial/request/:idevent", function($idevent) {
 
 	User::verifyLogin();
 
@@ -450,13 +480,14 @@ $app->post("/manager/financial/:idevent/request", function($idevent) {
 
 	$email = $user->getdesemail();
 
-	$event = Event::listAll($iduser);
+	$availableMoney = Event::availableMoney($idevent);
 
-	$users->setData($_POST);
+	$money = $availableMoney[0];
+
+	$results = $users->requestDeposit($_POST['holder_name'], $_POST['bank_name'], $_POST['agency'], $_POST['account'], $_POST['cpf_cnpj'], $_POST['phone'], $idevent, $iduser, $money['available_money'], $email);
 
 
-
-	header('Location: /manager/financial/'.$idevent);
+	//header('Location: /manager/financial/request/'.$idevent.'/bank');
 
 	exit;
 

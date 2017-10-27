@@ -22,18 +22,37 @@
                  <thead>
                 <tr>
                   <th>Evento</th>
+                  <th>Total de inscritos</th>
+                  <th>Pagamentos confirmados</th>
+                  <th>Dinheiro disponível</th>
                   <th>#</th>
   
                 </tr>
                 </thead>
                 <tbody>
-                 {loop="$event"}
+                
                 <tr>
-                  <td>{function="utf8_encode($value.event_name)"}</td>
-                  <td><p> <a href="/manager/financial/request/{$value.idevent}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Clique aqui</a></p></td>
+                  <td>{$event.event_name}</td>
+                  <td>{$event.subscribes}</td>
+                  <td>{$confirmedPayment}</td>
+                  {if="$money.available_money == NULL"}
+                  <td>0</td>
+                  {else}
+                  <td>{$money.available_money}</td>
+                  {/if}
+                  
+
+                  <td>
+                    {if="$money.available_money == NULL"}
+                    <p> Solicitar depósito indisponível </p>
+                    {else}
+                    <p> <a href="/manager/financial/request/{$event.idevent}/bank" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Solicitar Depósito</a></p>
+                    {/if}
+                    
+                  </td>
                 </tr>  
                 </tbody>
-                {/loop}
+             
               </table>
             </div>
           </div>

@@ -15,7 +15,7 @@ class Participant extends Model {
 	const ERROR_REGISTER = "ParticipantErrorRegister";
 	const REGISTER_SUCCESS = "ParticipantRegisterSuccess";
 
-	public static function listAllSubs($idevent)
+	public static function listAll($idevent)
 	{
 
 		$sql = new Sql();

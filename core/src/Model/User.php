@@ -247,12 +247,12 @@ class User extends Model {
 
 	}
 
-	public function requestDeposit($idevent, $iduser)
+	public function requestDeposit($holder_name, $bank_name, $agency, $account, $cpf_cnpj, $phone, $idevent, $iduser, $total_amount, $email)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_request WHERE create_user_id = :iduser", 
+		$results = $sql->select("SELECT * FROM tb_request_deposit WHERE create_user_id = :iduser", 
 			array(
 				":iduser" => $iduser
 
@@ -266,38 +266,35 @@ class User extends Model {
 		} else 
 			{	
 
-				// $results2 = $sql->select("SELECT * FROM tb_bank WHERE create_user_id = :iduser", 
-				// array(
-				// 	":iduser" => $iduser		
+				$admin_email = "renatofr95@gmail.com";
+				$admin_name = "Renato Antonio";
 
-				// ));
-
-				// $data = $results2[0];
-
-				$mailer = new Mailer('renatofr95@gmail.com' , "Solicitação de Depósito", "request", array(
-				"name" => $this->getholder_name(),
-				"cpf" => $this->getcpf_cnpj(),
-				"bank_name" => $this->getbank_name(),
-				"agency" => $this->getagency(),
-				"account" => $this->getaccount(),
-				"value" => $this->getvalue(),
-				"event_name" => $this->getevent_name()
+				$mailer = new Mailer($admin_email, $admin_name, "Solicitação de depósito", "request", array(
+				"name" => $holder_name,
+				"cpf_cnpj" => $cpf_cnpj,
+				"bank_name" => $bank_name,
+				"agency" => $agency,
+				"account" => $account,
+				"value" => $total_amount,
+				"email" => $email,
+				"phone" => $phone
 				));
 
 				$mailer->send();
 
-				$results2 = $sql->query("INSERT INTO tb_request (idevent, create_user_id) VALUES (:idevent, :create_user_id)", 
+
+				$results2 = $sql->query("INSERT INTO tb_request_deposit (total_amount, event_id, create_user_id) VALUES (:total_amount, :event_id, :create_user_id)", 
 					array(
-						":idevent" => $this->getidevent(),
-						":create_user_id" => $this->getcreate_user_id()
+						":total_amount" => $total_amount,
+						":event_id" => $idevent,
+						":create_user_id" => $iduser
 
 					));
-				
-
+			
 			}
 		
 
-
+			
 
 	}
 
