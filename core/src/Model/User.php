@@ -207,9 +207,9 @@ class User extends Model {
 
 			$data = $results[0];
 
-			$results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
+			$results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :ip)", array(
 				":iduser"=>$data["iduser"],
-				":desip"=>$_SERVER["REMOTE_ADDR"]
+				":ip"=>$_SERVER["REMOTE_ADDR"]
 			));
 
 			if (count($results2) === 0)
@@ -224,12 +224,8 @@ class User extends Model {
 				$dataRecovery = $results2[0];
 
 				$code = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, User::SECRET, $dataRecovery["idrecovery"], MCRYPT_MODE_ECB));
-
-				if ($inadmin) {
-					$link = "http://sgcongressos.com/manager/forgot/reset?code=$code";	
-				} else {
-					$link = "http://sgcongressos.com.br/forgot/reset?code=$code";
-				}
+				
+				$link = "http://sgcongressos.com/manager/forgot/reset?code=$code";	
 
 				$mailer = new Mailer($data["desemail"], $data["desname"], "Redefinir Senha", "forgot", array(
 					"name"=>$data["desname"],

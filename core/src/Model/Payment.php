@@ -14,12 +14,11 @@ class Payment {
 
 
 
-	public static function PaymentCredit($email, $amount, $token, $installments, $payment_method_id, $name, $site)
+	public static function PaymentCredit($email, $amount, $token, $installments, $payment_method_id, $name, $site, $idparticipant, $event_id)
 	{
 
-		$mp = new mercadopago("TEST-5867712708748536-102517-80bb2592d32bec67d8d0da42db86ad3c__LD_LA__-203534313");
+		$mp = new mercadopago("TEST-5867712708748536-110112-cf9db2b3ce63f8e253057da276d2e51a__LB_LA__-203534313");
 
-		$idempotency_key = uniqid(rand());
 
 		$payment_data = array(
 			"transaction_amount" => $amount,
@@ -35,59 +34,77 @@ class Payment {
 
 		$payment = $mp->post("/v1/payments", $payment_data);
 
-		var_dump($payment);
-
 		$status_code = $payment['status'];
 
 		if($status_code == 201){
 			foreach ($payment as $key => $value) {
-				$date = $value['date_created'];
 				$status = $value['status'];
 				$status_detail = $value['status_detail'];
+				$payment_method = $value['payment_type_id'];
+				$payment_id = $value['id'];
+			}
 
-				// echo $date;
-				// echo "<br>";
-				// echo $status;
-				// echo "<br>";
-				// echo $status_detail;
 
-				if($status == 'in_process' && $status_detail == 'pending_contingency')
+			if($status == 'in_process' && $status_detail == 'pending_contingency')
+			{
+
+				$mailer = new Mailer($email, $name, "Pagamento em processo", "payment_process", array(
+				"name"=> $name
+				));
+
+				$mailer->send();
+				
+
+			}
+			else{
+
+				if($status == 'rejected')
 				{
 
-					$mailer = new Mailer($email, $name, "Pagamento em processo", "payment_process", array(
+					$mailer = new Mailer($email, $name, "Pagamento rejeitado", "payment_rejected", array(
 					"name"=> $name
 					));
 
 					$mailer->send();
+
 					
 
 				}
-				else{
-					if($status == 'rejected')
-					{
+				if($status == 'approved')
+				{
 
-						$mailer = new Mailer($email, $name, "Pagamento rejeitado", "payment_rejected", array(
-						"name"=> $name
+					$mailer = new Mailer($email, $name, "Pagamento aprovado", "payment_approved", array(
+					"name"=> $name
+					));
+
+					$mailer->send();
+
+					$sql = new Sql();
+
+					$results = $sql->query("INSERT INTO tb_payment (payment_id, total_amount, payment_method, status, create_user_id, event_id) 
+						VALUES (:payment_id, :total_amount, :payment_method, :status, :create_user_id, :event_id)
+						", array(
+							":payment_id" => $payment_id,
+							":total_amount" => $amount,
+							":payment_method" => $payment_method,
+							":status" => $status,
+							":create_user_id" => $idparticipant,
+							":event_id" => $event_id
+
+					));
+
+					$results2 = $sql->query("UPDATE tb_participants 
+						SET status = 1 
+						WHERE idparticipant = :idparticipant", 
+						array(
+						":idparticipant" => $idparticipant
+
 						));
-
-						$mailer->send();
-
-						
-
-					}
-					if($status == 'approved')
-					{
-
-						$mailer = new Mailer($email, $name, "Pagamento aprovado", "payment_approved", array(
-						"name"=> $name
-						));
-
-						$mailer->send();
-
-					}
 
 				}
+
 			}
+			
 
 			return $status_code;
 		}
@@ -99,7 +116,7 @@ class Payment {
 	{
 
 
-		$mp = new mercadopago ("APP_USR-5867712708748536-102517-db9a877d6ddcc170d8fb2953723748bc__LB_LC__-203534313");
+		$mp = new mercadopago ("TEST-5867712708748536-110112-cf9db2b3ce63f8e253057da276d2e51a__LB_LA__-203534313");
 
 		$payment_methods = $mp->get ("/v1/payment_methods");
 
@@ -115,7 +132,7 @@ class Payment {
 	{
 		
 		$mp = new mercadopago 
-		("APP_USR-5867712708748536-102517-db9a877d6ddcc170d8fb2953723748bc__LB_LC__-203534313");
+		("TEST-5867712708748536-110112-cf9db2b3ce63f8e253057da276d2e51a__LB_LA__-203534313");
 		
 
 		$payment_data = 
@@ -149,31 +166,16 @@ class Payment {
 		$payment = $mp->post('/v1/payments', $payment_data);
 
 		foreach ($payment as $key => $value) {
-			$transaction = $value['transaction_details'];
-			
-			$url = $transaction['external_resource_url'];
+
+			$payment_id = $value['id'];
+
+			$payment_method = $value['payment_type_id'];
+
+			$status = $value['status'];
 					
 		}
 
-		$payment_id = $value['id'];
-
-		$payment_method = $value['payment_type_id'];
-
-		$status = $value['status'];
-
-		// var_dump($payment_id);
-
-		// var_dump($amount);
-
-		// var_dump($date_of_expiration);
-
-		// var_dump($payment_method);
-
-		// var_dump($status);
-
-		// var_dump($participant_id);
-
-		// var_dump($event_id);
+		
 
 		$sql = new Sql();
 
@@ -209,51 +211,68 @@ class Payment {
 
 	}
 
+	public static function searchAllPayments()
+	{
+
+		$sql = new Sql();
+
+		$search = $sql->select("SELECT * FROM tb_payment WHERE status = 'approved'");
+
+		return count($search);
+
+	}
+
 	public static function checkPayment($iduser)
 	{
 
 		$mp = new mercadopago 
-		("APP_USR-5867712708748536-102517-db9a877d6ddcc170d8fb2953723748bc__LB_LC__-203534313");
+		("TEST-5867712708748536-110112-cf9db2b3ce63f8e253057da276d2e51a__LB_LA__-203534313");
 
 		$sql = new Sql();
 
-		$search = $sql->select("SELECT * FROM tb_payment WHERE create_user_id = :iduser", array(
+		$search = $sql->select("SELECT * FROM tb_payment WHERE create_user_id = :iduser AND payment_method = 'ticket'", array(
 			":iduser" => $iduser
 
 			));
 
-		$data = $search[0];
-
-		$payment_id = $data['payment_id'];
-
-		$payment_method = $data['payment_method'];
-
-		$payment = $mp->get('/v1/payments/'.$payment_id);
-
-
-		
-		foreach ($payment as $key => $value) 
+		if(count($search) > 0)
 		{
+			$data = $search[0];
 
-			$status = $value['status'];
-					
+			$payment_id = $data['payment_id'];
+
+			$payment_method = $data['payment_method'];
+
+			$payment = $mp->get('/v1/payments/'.$payment_id);
+
+
+			
+			foreach ($payment as $key => $value) 
+			{
+
+				$status = $value['status'];
+						
+			}
+
+			
+
+
+			if($status == 'approved')
+			{
+
+				$results = $sql->query("CALL sp_payment_approved (:pidparticipant)", 
+					array(
+					":pidparticipant" => $iduser
+					));
+
+				return $results;
+
+			}
+
 		}
 
-		var_dump($status);
-
-
-		if($status == 'approved')
-		{
-
-			$results = $sql->query("CALL sp_payment_approved (:pidparticipant)", 
-				array(
-				":pidparticipant" => $iduser
-				));
-
-			return $results;
-
-		}
 		
+	
 
 	}
 

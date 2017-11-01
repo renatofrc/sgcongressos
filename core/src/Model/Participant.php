@@ -28,6 +28,22 @@ class Participant extends Model {
 
 	}
 
+	public static function getParticipant($idparticipant)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT a.idparticipant, a.pname, a.cpf, a.phone, a.email, a.status, a.login, a.password, a.event_id, a.category, a.dtregister FROM tb_participants a, tb_event b WHERE a.event_id = b.idevent AND idparticipant = :idparticipant", 
+			array(
+				":idparticipant" => $idparticipant
+
+
+			));
+
+		return $results;
+
+	}
+
 
 	public static function getFromSession()
 	{
@@ -188,81 +204,13 @@ class Participant extends Model {
 
 	}
 
-		public static function setError($msg)
+	public static function checkStatus($idparticipant)
 	{
 
-		$_SESSION[Participant::ERROR] = $msg;
+
 
 	}
 
-
-	public static function getError()
-	{
-
-		$msg = (isset($_SESSION[Participant::ERROR]) && $_SESSION[Participant::ERROR]) ? $_SESSION[Participant::ERROR] : '';
-
-		Participant::clearError();
-
-		return $msg;
-
-	}
-
-	public static function clearError()
-	{
-
-		$_SESSION[Participant::ERROR] = NULL;
-
-	}
-
-	public static function setErrorRegister($msg)
-	{
-
-		$_SESSION[Participant::ERROR_REGISTER] = $msg;
-
-	}
-
-	public static function setRegisterSuccess($msg)
-	{
-
-		$_SESSION[Participant::REGISTER_SUCCESS] = $msg;
-
-	}
-
-	public static function getErrorRegister()
-	{
-
-		$msg = (isset($_SESSION[Participant::ERROR_REGISTER]) && $_SESSION[Participant::ERROR_REGISTER]) ? $_SESSION[Participant::ERROR_REGISTER] : '';
-
-		Participant::clearErrorRegister();
-
-		return $msg;
-
-	}
-
-	public static function getRegisterSuccess()
-	{
-
-		$msg = (isset($_SESSION[Participant::REGISTER_SUCCESS]) && $_SESSION[Participant::REGISTER_SUCCESS]) ? $_SESSION[Participant::REGISTER_SUCCESS] : '';
-
-		Participant::clearRegisterSuccess();
-
-		return $msg;
-
-	}
-
-	public static function clearErrorRegister()
-	{
-
-		$_SESSION[Participant::ERROR_REGISTER] = NULL;
-
-	}
-
-	public static function clearRegisterSuccess()
-	{
-
-		$_SESSION[Participant::REGISTER_SUCCESS] = NULL;
-
-	}
 
 	public static function checkEmailExist($email, $idevent)
 	{
@@ -338,3 +286,4 @@ class Participant extends Model {
 
 
 }
+?>

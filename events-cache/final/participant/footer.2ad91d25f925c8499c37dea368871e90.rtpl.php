@@ -5,7 +5,7 @@
       
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017.</strong> All rights reserved.
+  <strong>Copyright &copy; SG Congressos.</strong>
   </footer>
 
   <!-- Control Sidebar -->

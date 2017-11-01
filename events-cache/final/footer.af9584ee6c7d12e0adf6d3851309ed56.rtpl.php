@@ -1,7 +1,7 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
 					
 				<span class="copyright">
-					&copy; Copyright. SGCongressos</a>
+					&copy; Copyright. SG Congressos</a>
 				</span>
 			</footer>
 	</div>

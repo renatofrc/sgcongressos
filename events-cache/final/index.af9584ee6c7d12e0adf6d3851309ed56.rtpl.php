@@ -45,7 +45,7 @@
 					        <div class="col-sm-1"><i class="fa fa-bookmark fa-3x" aria-hidden="true"></i></div>
 					        <div class="col-sm-2">
 					        	<h3>Sobre o Evento</h3> 
-					        	<p><?php echo htmlspecialchars( $event["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+					        	<p><?php echo utf8_encode($event["description"]); ?></p>
 					        </div>
 
 					       <div class="col-sm-1"><i class="fa fa-calendar fa-3x" aria-hidden="true"></i></div>

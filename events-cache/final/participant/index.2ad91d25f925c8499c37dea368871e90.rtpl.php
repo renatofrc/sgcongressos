@@ -54,7 +54,7 @@
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
-        <li><a href="#"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/activities"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
       </ul>
@@ -80,25 +80,8 @@
 
   <div class="row">
 
-        <?php if( $participant["status"]==0 ){ ?>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>Status</h3>
-         
-              <p>Não Pago</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-minus"></i>
-            </div>
-            <p class="small-box-footer"><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment" style="color: #fff">Clique aqui para pagar</a></p>
-          </div>
-        </div>
-         
-        <?php }else{ ?>
+        <?php if( $participant["status"]==1 ){ ?>
          <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
               <h3>Status</h3>
@@ -109,10 +92,26 @@
               <i class="ion ion-plus"></i>
             </div>
             <p class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></p>
-          </div>
-        </div>
-        <?php } ?>
+          </div>    
+         </div>  
+         <?php }else{ ?>
+         <?php if( $participant["status"]=='' ){ ?>
 
+        <div class="col-lg-3 col-xs-6">
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>Status</h3>
+         
+              <p>Não Pago</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-minus"></i>
+            </div>
+            <p class="small-box-footer"><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment" style="color: #fff">Clique aqui para pagar</a></p>
+          </div>  
+        </div>
+        <?php } ?>  
+      <?php } ?> 
 
 
 

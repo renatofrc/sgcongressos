@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -8,7 +8,7 @@
   <ol class="breadcrumb">
     <li><a href="/manager"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/manager/activities">Activities</a></li>
-    <li class="active"><a href="/manager/activities/{$idevent}/new">New</a></li>
+    <li class="active"><a href="/manager/activities/<?php echo htmlspecialchars( $idevent, ENT_COMPAT, 'UTF-8', FALSE ); ?>/new">New</a></li>
   </ol>
 </section>
 
@@ -23,13 +23,13 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/manager/activities/{$idevent}/new/" method="post">
+        <form role="form" action="/manager/activities/<?php echo htmlspecialchars( $idevent, ENT_COMPAT, 'UTF-8', FALSE ); ?>/new/" method="post">
           <div class="box-body">
-             {if="$registerError!=''"}
+             <?php if( $registerError!='' ){ ?>
                 <div class="alert alert-danger">
-                    {$registerError}
+                    <?php echo htmlspecialchars( $registerError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </div>
-                {/if}
+                <?php } ?>
             
             <div class="form-group">
               <label for="desname">Nome da Atividade</label>

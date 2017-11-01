@@ -5,7 +5,7 @@
       
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; SG Eventos.</strong>
+    <strong>Copyright &copy; SG Congressos.</strong>
   </footer>
 
   

@@ -121,6 +121,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li><a href="/manager"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/manager/events"><i class="fa fa-calendar"></i> <span>Eventos</span></a></li>
         <li><a href="/manager/participants"><i class="fa fa-user"></i> <span>Participantes</span></a></li>
+        <li><a href="/manager/submits"><i class="fa fa-suitcase"></i> <span>Trabalhos Submetidos</span></a></li>
         <li><a href="/manager/activities"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="/manager/financial"><i class="fa fa-briefcase"></i> <span>Financeiro</span></a></li>
         

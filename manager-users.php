@@ -258,6 +258,23 @@ $app->get("/manager/participants", function() {
 
 });
 
+$app->get("/manager/submits", function() {
+
+	User::verifyLogin();
+
+	$user = User::getFromSession();
+
+	$iduser = $user->getiduser();
+
+	$event = Event::listAll($iduser);
+
+	$page = new PageManager();
+
+	$page->setTpl("submits");
+
+
+});
+
 $app->get("/manager/participants/:idevent", function($idevent) {
 
 	User::verifyLogin();
@@ -487,7 +504,7 @@ $app->post("/manager/financial/request/:idevent", function($idevent) {
 	$results = $users->requestDeposit($_POST['holder_name'], $_POST['bank_name'], $_POST['agency'], $_POST['account'], $_POST['cpf_cnpj'], $_POST['phone'], $idevent, $iduser, $money['available_money'], $email);
 
 
-	//header('Location: /manager/financial/request/'.$idevent.'/bank');
+	header('Location: /manager/financial/request/'.$idevent.'/bank');
 
 	exit;
 

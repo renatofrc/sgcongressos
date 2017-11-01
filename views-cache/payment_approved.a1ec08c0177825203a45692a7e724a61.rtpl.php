@@ -402,39 +402,30 @@
                 <td>
                   <table class="soapbox">
                     <tr>
-                      <td class="soapbox-title">Solicitação de Depósito</td>
+                      <td class="soapbox-title">Informações sobre pagamento</td>
                     </tr>
                   </table>
                   <table class="body">
                     <tr>
                       <td class="body-padding"></td>
                       <td class="body-padded">
-                        <div class="body-title">Olá SG Eventos</div>
+                        <div class="body-title">Olá <?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
                         <table class="body-text">
                           <tr>
                             <td class="body-text-cell">
-                              Segue abaixo os dados do cliente: </a>.
+                              Pagamento aprovado</a>.
                             </td>
                           </tr>
                         </table>
                       
-                          <p>Nome: <?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <p>CPF/CNPJ: <?php echo htmlspecialchars( $cpf_cnpj, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <p>Banco: <?php echo htmlspecialchars( $bank_name, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <p>Agência: <?php echo htmlspecialchars( $agency, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <p>Conta: <?php echo htmlspecialchars( $account, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <p>Valor : <?php echo htmlspecialchars( $value, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <br>
-                          <p>Contato: </p>
-                          <br>
-                          <p>E-mail: <?php echo htmlspecialchars( $email, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
-                          <p>Telefone: <?php echo htmlspecialchars( $phone, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                          <p>Seu pagamento foi aprovado com sucesso! Volte ao painel para escolher suas atividades.</p>
+                         
 
                         
                         <table class="body-signature-block">
                           <tr>
                             <td class="body-signature-cell">
-                              <p>Verifique os dados e realize o depósito, Obrigado!</p>
+                              <p>Obrigado por utilizar nosso software!</p>
                               
                             </td>
                           </tr>
@@ -457,7 +448,7 @@
         <td></td>
         <td class="container">
           <div class="content footer-lead">
-            <b>Copyright &copy; SG Congressos.</b>
+            <b>Copyright &copy; SG Congressos</b>
           </div>
         </td>
         <td></td>

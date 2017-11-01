@@ -20,6 +20,14 @@ $app->get('/', function() {
 
 });
 
+$app->get('/about', function() {
+
+	$page = new Page();
+
+	$page->setTpl("about");
+
+});
+
 $app->get("/event/:site", function($site) { // Novo modo de criação de páginas dinâmicas
 
 	$page = new PageEvent($site);
@@ -206,7 +214,13 @@ $app->get("/event/:site/login", function($site) {
 
  	$page = new PageParticipant($site);
 
- 	$participant = Participant::getFromSession();
+ 	$participants = Participant::getFromSession();
+
+ 	$participant = Participant::getParticipant($participants->getidparticipant());
+
+ 	$data = $participant[0];
+
+ 	$idparticipant = $data['idparticipant'];
 
  	$events = new Event();
 
@@ -214,15 +228,15 @@ $app->get("/event/:site/login", function($site) {
 
  	$event = $events->listEventData($site);
 
- 	Payment::checkPayment($participant->getidparticipant());
+ 	Payment::checkPayment($idparticipant);
 
  	$results = Event::checkList($event);
 
- 	$data = $results[0];
+ 	$data2 = $results[0];
 
  	$page->setTpl("index", [
- 		'event' => $data,
- 		'participant' => $participant->getValues()
+ 		'participant' => $data,
+ 		'event' => $data2
  	]);
 
  });
@@ -234,6 +248,8 @@ $app->get("/event/:site/login", function($site) {
  	$participant = Participant::getFromSession();
 
  	$participants = new Participant();
+
+ 	$getParticipant = Participant::getParticipant($participants->getidparticipant());
 
  	$participants->accessEdit($participant->getidparticipant());
 
@@ -251,7 +267,7 @@ $app->get("/event/:site/login", function($site) {
 
  	$page->setTpl("profile", [
  		'event' => $data,
- 		'participant' => $participant->getValues()
+ 		'participant' => $getParticipant
  	]);
 
  });
@@ -271,7 +287,7 @@ $app->post("/event/:site/panel/:idparticipant", function($site, $idparticipant) 
 
 }); 
 
-$app->get("/event/:site/panel/activities", function($site) {
+$app->get("/event/:site/panel/activities/", function($site) {
 
 	Participant::verifyLogin($site);
 
@@ -283,10 +299,7 @@ $app->get("/event/:site/panel/activities", function($site) {
 
 	$page = new PageParticipant($site);
 
-	$page->setTpl("activities", [
- 		'event' => $data,
- 		
- 	]);
+	$page->setTpl("activities");
 
 }); 
 
@@ -506,6 +519,15 @@ $app->post("/event/:site/card", function($site) {
 	$idparticipant = $participant->getidparticipant();
 
 	$participant_name = $participant->getpname();
+
+	$event = new Event();
+
+	$dataEvent = $event->listEventData($site);
+
+	$data = $dataEvent[0];
+
+	$event_id = $data['idevent'];
+
 		
 	$results = Payment::PaymentCredit(
  	$_POST['email'], 
@@ -514,13 +536,15 @@ $app->post("/event/:site/card", function($site) {
  	$_POST['installments'],  
  	$_POST['paymentMethodId'],
  	$participant_name,
- 	$site
+ 	$site,
+ 	$idparticipant,
+ 	$event_id
  	);
 
 	if($results == 201)
 	{
 		Message::setSuccess("Sua solicitação de pagamento foi enviada, verifique seu e-mail em alguns instantes.");
-		header('Location: /event/'.$site.'/payment');
+		header('Location: /event/'.$site.'/card');
 		exit;
 
 	}
@@ -538,7 +562,7 @@ $app->get("/event/:site/tests", function($site) {
 
 	$results = Payment::checkPayment($idparticipant);
 
-	var_dump($results);
+	
 
 });
 

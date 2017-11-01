@@ -8,7 +8,7 @@
                         <p></p>
                         <div class="footer-social">
                             <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
+                            
                            
                         </div>
                     </div>
@@ -30,12 +30,7 @@
                     <div class="footer-newsletter">
                         <h2 class="footer-wid-title">Contato</h2>
                         <p>Entre em contato conosco!</p>
-                        <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Digite seu e-mail">
-                                <input type="submit" value="Enviar">
-                            </form>
-                        </div>
+                        <p>E-mail: sgcongressos@gmail.com</p>
                     </div>
                 </div>
             </div>

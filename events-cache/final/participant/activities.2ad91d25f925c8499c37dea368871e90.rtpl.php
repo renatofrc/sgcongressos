@@ -1,11 +1,4 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<script type="text/javascript">
- // public_key_production APP_USR-ef82489e-82c7-41dd-b898-d8c288f52222 
- // public_key_Sandbox TEST-596f0b96-2abc-4603-949f-9135613fd3f3
-Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
-</script>
-
- <li class="dropdown user user-menu">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
@@ -60,7 +53,7 @@ Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
-        <li><a href="#"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/activities"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
       </ul>
@@ -70,48 +63,67 @@ Mercadopago.setPublishableKey("TEST-596f0b96-2abc-4603-949f-9135613fd3f3");
   </aside>
 
 
+
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Formas de pagamento
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-dashboard"></i> Home</a></li>
-    </ol>
-  </section>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Todas as Atividades
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/admin/activities">Activities</a></li>
+  </ol>
+</section>
 
-  <!-- Main content -->
-  <section class="content">
+<section class="content">
 
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
 
-    <div class="row">
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                 <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Tipo</th>
+                  <th>Data</th>
+                  <th>Horário inicial</th>
+                  <th>Horário final</th>
+                  <th>Inscritos</th>
+                  <th>Vagas</th>
+                  <th>Ações</th>
 
-      <div class="col-md-8">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-yellow">
-         
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Escolha sua forma de pagamento</h3>
-              <h5 class="widget-user-desc"></h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                
-                <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/ticket">Boleto<p class="pull-right ">Clique aqui</p></a></li>
-                <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/card">Cartão de crédito<p class="pull-right ">Clique aqui</p></a></li>
-              
-               
-              </ul>   
-           
+                </tr>
+                </thead>
+                <tbody>
+                  <!-- <?php $counter1=-1;  if( isset($activity) && ( is_array($activity) || $activity instanceof Traversable ) && sizeof($activity) ) foreach( $activity as $key1 => $value1 ){ $counter1++; ?> -->
+                <tr>
+                 <!--  <td><?php echo utf8_encode($value1["activity_name"]); ?></td>
+                  <td><?php echo utf8_encode($value1["description"]); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["activity_type"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["data_activity"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["initial_hour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["end_hour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["subscribes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["vacancies"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td> -->
+
+                   <td>
+                   <p> <a href="" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Inscrever-se</a></p>
+                  </td>
+                  
+                </tr>
+
+               <!--  <?php } ?> -->
+                </tbody>            
+              </table>
             </div>
           </div>
-        </div>
-      
-
     </div>
+  </div>
 
 </section>
+<!-- /.content -->
 </div>

@@ -5,7 +5,7 @@ use \SG\PageManagerError;
 use \SG\Model\User;
 use \SG\Model\Event;
 use \SG\Model\Message;
-use \SG\Model\Pay;
+use \SG\Model\Payment;
 
 $app->get('/manager', function() {
     
@@ -19,11 +19,14 @@ $app->get('/manager', function() {
 
 	$subscribes = Event::totalSubs($iduser);
 
+	$payments = Payment::searchAllPayments();
+
 	$page = new PageManager();
 
 	$page->setTpl("index",[
 		'events' => count($events),
-		'subscribes' => $subscribes
+		'subscribes' => $subscribes,
+		'payments' => $payments
 	]);
 
 });

@@ -52,7 +52,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>0</h3>
+              <h3><?php echo htmlspecialchars( $payments, ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
 
               <p>Pagamentos Confirmados</p>
             </div>

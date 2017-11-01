@@ -60,7 +60,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/">Home</a></li>
-                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="/about">Sobre Nós</a></li>
                         <li><a href="/manager/register">Crie sua conta</a></li>
                     </ul>
                 </div>  
