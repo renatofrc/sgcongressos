@@ -50,6 +50,7 @@
                   <td><?php echo htmlspecialchars( $value1["vacancies"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 
                    <td>
+                    <p> <a href="/manager/activities/<?php echo htmlspecialchars( $idevent, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idactivity"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/participants" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Lista</a></p>
                    <p> <a href="/manager/activities/<?php echo htmlspecialchars( $idevent, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idactivity"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a></p>
                      <p> <a href="/manager/activities/<?php echo htmlspecialchars( $idevent, ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a></p>
                   </td>

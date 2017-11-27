@@ -9,6 +9,7 @@ use \SG\Model\Activities;
 use \SG\PageManagerError;
 use \SG\Model;
 use Rain\Tpl;
+use Mpdf\Mpdf;
 
 // require_once("functions.php");
 
@@ -311,29 +312,6 @@ $app->get("/manager/participants/:idevent", function($idevent) {
 
 });
 
-$app->get("/manager/participants/:idevent/export", function($idevent) {
-
-	User::verifyLogin();
-
-	$user = new User();
-
-	$event = new Event();
-
-	$event->getId((int)($idevent));	
-
-	$results = $event->accessEdit(getUserId());
-
-	$participants = new Participant();
-
-	$participant = Participant::listAll($idevent);
-
-	
-
-	
-
-});
-
-
 $app->get("/manager/activities", function() {
 
 	User::verifyLogin();
@@ -558,6 +536,37 @@ $app->get("/manager/activities/:idevent", function($idevent) {
 			'registerError'=>Message::getErrorRegister(),
 			'activity' => $activity,
 			'idevent' => $idevent
+		]);
+	}
+	else{
+
+		$page = new PagemanagerError();
+
+		$page->setTpl("404");
+	}
+
+});
+
+$app->get("/manager/activities/:idevent/:idactivity/participants", function($idevent,$idactivity) {
+
+	User::verifyLogin();
+
+	$user = new User();
+
+	$event = new Event();
+
+	$event->getId((int)($idevent));	
+
+	$results = $event->accessEdit(getUserId());
+
+	if($results === true){
+
+		$page = new Pagemanager();
+
+		$list = Event::getParticipantsActivities($idevent, $idactivity);
+		
+		$page->setTpl("activities-event-participants", [
+			'participant' => $list
 		]);
 	}
 	else{

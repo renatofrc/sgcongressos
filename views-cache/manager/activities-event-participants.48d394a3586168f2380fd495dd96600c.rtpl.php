@@ -1,9 +1,9 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Todos os Participantes
+    Lista de Participantes
   </h1>
   <ol class="breadcrumb">
     <li><a href="/manager"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -24,30 +24,24 @@
                   <th>CPF</th>
                   <th>Telefone</th>
                   <th>E-mail</th>
-                  <th>Status(Pago/Não Pago)</th>
                   <th>Categoria</th>
                  
                 </tr>
                 </thead>
                 <tbody>
-                   {loop="$participant"}
+                   <?php $counter1=-1;  if( isset($participant) && ( is_array($participant) || $participant instanceof Traversable ) && sizeof($participant) ) foreach( $participant as $key1 => $value1 ){ $counter1++; ?>
                 <tr>
-                  <td>{function="utf8_decode($value.pname)"}</td>
-                  <td>{$value.cpf}</td>
-                  <td>{$value.phone}</td>
-                  <td>{$value.email}</td>
-                  {if="$value.status==='0'"}
-                  <td>Não Pago</td>
-                  {else}
-                  <td>Pago</td>
-                  {/if}
-                  <td>{$value.category}</td>
+                  <td><?php echo utf8_decode($value1["pname"]); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["cpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["phone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo htmlspecialchars( $value1["category"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   
                 </tr>
 
                
                 </tbody>
-                {/loop}
+                <?php } ?>
               </table>
             </div>
           </div>

@@ -82,20 +82,6 @@ class Event extends Model {
 
 	}
 
-	public static function exportParticipantList($idevent)
-	{
-
-		$sql = new Sql();
-
-		$results = $sql->select("SELECT * FROM tb_participants WHERE event_id = :idevent", array(
-			':idevent' => $idevent
-
-		));
-
-		return $results;
-
-	}
-
 	public static function checkVacancies($site)
 	{
 
@@ -135,6 +121,20 @@ class Event extends Model {
 		}
 
 		return $list;
+
+	}
+
+	public static function getParticipantsActivities($idevent, $idactivity)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT pname, cpf, phone, email, category FROM tb_participants a, tb_participants_activities b WHERE a.idparticipant = b.participant_id AND b.activity_id = :idactivity AND b.event_id = :idevent", array(
+			':idactivity' => $idactivity,
+			':idevent' => $idevent
+		));
+
+		return $results;
 
 	}
 

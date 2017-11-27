@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Todos os Participantes
+    Lista de Participantes
   </h1>
   <ol class="breadcrumb">
     <li><a href="/manager"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -24,7 +24,6 @@
                   <th>CPF</th>
                   <th>Telefone</th>
                   <th>E-mail</th>
-                  <th>Status(Pago/Não Pago)</th>
                   <th>Categoria</th>
                  
                 </tr>
@@ -36,11 +35,6 @@
                   <td>{$value.cpf}</td>
                   <td>{$value.phone}</td>
                   <td>{$value.email}</td>
-                  {if="$value.status==='0'"}
-                  <td>Não Pago</td>
-                  {else}
-                  <td>Pago</td>
-                  {/if}
                   <td>{$value.category}</td>
                   
                 </tr>
