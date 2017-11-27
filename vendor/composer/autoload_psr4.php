@@ -7,4 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'SG\\' => array($baseDir . '/core/src'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
 );

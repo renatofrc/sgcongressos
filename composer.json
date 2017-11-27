@@ -12,7 +12,8 @@
 		"slim/slim" : "2.0",
 		"rain/raintpl" : "3.0.0",
 		"mercadopago/sdk": "0.5.2",
-		"developercielo/api-3.0-php": "^1.0"
+		"developercielo/api-3.0-php": "^1.0",
+		"mpdf/mpdf": "^7.0"
 	},
 
 	"autoload": {

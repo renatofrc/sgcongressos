@@ -1,8 +1,8 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script type="text/javascript">
- // public_key_production APP_USR-4eeafa3d-0cc1-4b29-bff5-fd8979e79436 
- // public_key_Sandbox  TEST-f31cc86f-c8ad-4620-829b-29e765bbfac8
-Mercadopago.setPublishableKey("TEST-f31cc86f-c8ad-4620-829b-29e765bbfac8");
+
+Mercadopago.setPublishableKey("TEST-44e4aa61-5191-4f03-98dc-5ff1f0ce05d5");
+
 </script>
 
 <!-- User Account Menu -->
@@ -61,7 +61,7 @@ Mercadopago.setPublishableKey("TEST-f31cc86f-c8ad-4620-829b-29e765bbfac8");
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
-        <li><a href="#"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/subactivities/"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
       </ul>

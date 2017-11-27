@@ -295,8 +295,11 @@ $app->get("/manager/participants/:idevent", function($idevent) {
 
 		$participant = Participant::listAll($idevent);
 
+
+
 		$page->setTpl("participants-event", [
-			'participant' => $participant
+			'participant' => $participant,
+			'idevent' => $idevent
 		]);
 	}
 	else{
@@ -307,6 +310,29 @@ $app->get("/manager/participants/:idevent", function($idevent) {
 	}
 
 });
+
+$app->get("/manager/participants/:idevent/export", function($idevent) {
+
+	User::verifyLogin();
+
+	$user = new User();
+
+	$event = new Event();
+
+	$event->getId((int)($idevent));	
+
+	$results = $event->accessEdit(getUserId());
+
+	$participants = new Participant();
+
+	$participant = Participant::listAll($idevent);
+
+	
+
+	
+
+});
+
 
 $app->get("/manager/activities", function() {
 

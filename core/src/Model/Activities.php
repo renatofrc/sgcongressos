@@ -29,12 +29,25 @@ class Activities extends Model {
 
 		$sql = new Sql();
 
-		$results =  $sql->select("SELECT activity_name,description, activity_type, initial_hour, end_hour ,vacancies , subscribes FROM tb_activities a, tb_participants b WHERE a.event_id = b.event_id AND idparticipant = :idparticipant",
+		$results =  $sql->select("SELECT idactivity, activity_name,description, activity_type, data_activity, initial_hour, end_hour ,vacancies , subscribes FROM tb_activities a, tb_participants b WHERE a.event_id = b.event_id AND idparticipant = :idparticipant",
 			array(
 				":idparticipant" => $idparticipant
 		));
 
 		return $results;
+
+	}
+
+	public static function checkVacancies($idactivity)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_activities  WHERE idactivity = :idactivity AND subscribes = vacancies AND vacancies > 0 AND subscribes > 0", [
+			':idactivity'=>$idactivity,
+		]);
+
+		return (count($results) > 0);
 
 	}
 
@@ -56,7 +69,7 @@ class Activities extends Model {
 
 			));
 
-		return var_dump($results);
+		return $results;
 
 	}
 

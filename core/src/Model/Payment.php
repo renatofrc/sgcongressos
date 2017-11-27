@@ -13,7 +13,6 @@ use MercadoPago\mercadopago;
 class Payment {
 
 
-
 	public static function PaymentCredit($email, $amount, $token, $installments, $payment_method_id, $name, $site, $idparticipant, $event_id)
 	{
 
@@ -226,7 +225,7 @@ class Payment {
 	{
 
 		$mp = new mercadopago 
-		("TEST-5867712708748536-110112-cf9db2b3ce63f8e253057da276d2e51a__LB_LA__-203534313");
+		("APP_USR-5867712708748536-110112-c31e1396bedcae167062ffd1e2bd1230__LC_LD__-203534313");
 
 		$sql = new Sql();
 

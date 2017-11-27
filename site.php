@@ -10,6 +10,7 @@ use \SG\PageParticipant;
 use \SG\DB\Sql;
 use \SG\PagSeguro\Config;
 use \SG\Model\Payment;
+use \SG\Model\Activities;
 use Rain\Tpl;
 
 $app->get('/', function() {
@@ -151,7 +152,7 @@ $app->get("/event/:site", function($site) { // Novo modo de criação de página
 			exit;
 		}
 
-		if (Participant::checkVacancies($url)) {
+		if (Event::checkVacancies($url)) {
 			Message::setErrorRegister("Limite de vagas excedido.");
 			header('Location: /event/'.$url.'/subscribe');
 			exit;
@@ -200,10 +201,34 @@ $app->get("/event/:site/login", function($site) {
 
   $app->post("/event/:site/login", function($site) { 
 
- 	Participant::login($_POST["login"], $_POST["password"]);
+	  
+  	if(isset($_POST['submit']))
+  	{
 
+		if(!isset($_POST['login']) || $_POST['login']=='')
+	  	{
+
+	  		Message::setErrorRegister('Digite seu login');
+	  		header("Location: /event/".$site."/login");
+	  		exit;
+
+	  	}
+	  	if(!isset($_POST['password']) || $_POST['password']=='')
+	  	{
+
+	  		Message::setErrorRegister('Digite sua senha');
+	  		header("Location: /event/".$site."/login");
+	  		exit;
+
+	  	}
+
+
+  	} 	
+
+ 	Participant::login($_POST["login"], $_POST["password"]);
 	header("Location: /event/".$site."/panel");
 	exit;
+
 
  });
 
@@ -222,14 +247,22 @@ $app->get("/event/:site/login", function($site) {
 
  	$idparticipant = $data['idparticipant'];
 
+ 	$status = $data['status'];
+
  	$events = new Event();
 
  	$url = $events->getUrl($site);
 
  	$event = $events->listEventData($site);
 
- 	Payment::checkPayment($idparticipant);
+ 	if($status == 0)
+ 	{
 
+ 		Payment::checkPayment($idparticipant);
+
+ 	}
+
+ 	
  	$results = Event::checkList($event);
 
  	$data2 = $results[0];
@@ -249,7 +282,9 @@ $app->get("/event/:site/login", function($site) {
 
  	$participants = new Participant();
 
- 	$getParticipant = Participant::getParticipant($participants->getidparticipant());
+ 	$getParticipant = Participant::getParticipant($participant->getidparticipant());
+
+    $data = $getParticipant[0];
 
  	$participants->accessEdit($participant->getidparticipant());
 
@@ -261,13 +296,13 @@ $app->get("/event/:site/login", function($site) {
 
  	$results = Event::checkList($event);
 
- 	$data = $results[0];
+ 	$data2 = $results[0];
 
  	$page = new PageParticipant($site);
 
  	$page->setTpl("profile", [
- 		'event' => $data,
- 		'participant' => $getParticipant
+ 		'event' => $data2,
+ 		'participant' => $data
  	]);
 
  });
@@ -285,7 +320,52 @@ $app->post("/event/:site/panel/:idparticipant", function($site, $idparticipant) 
 	header('Location: /event/'.$site.'/panel');
 	exit;
 
-}); 
+});
+
+$app->get("/event/:site/panel/subactivities/", function($site) {
+
+	Participant::verifyLogin($site);
+
+	$participant = Participant::getFromSession();
+
+	$idparticipant = $participant->getidparticipant();
+
+ 	$events = new Event();
+
+ 	$event = $events->listEventData($site);
+
+ 	$results = Event::checkList($event);
+
+ 	$data2 = $results[0];
+
+ 	$checkStatus = Participant::checkStatus($idparticipant);	
+
+ 	$listSubActivities = Participant::listSubActivities($idparticipant);
+
+ 	// var_dump($listSubActivities);
+
+	if ($checkStatus == 1)
+	{
+		$page = new PageParticipant($site);
+
+		$page->setTpl("subactivities", [
+			"participant" => $participant->getValues(),
+			"event" => $data2,
+			"listActivities" => $listSubActivities
+			
+		]);
+
+	}
+	else
+	{
+		
+		echo "<script>alert('Pagamento não confirmado!');</script>";
+		echo "<script>location.href='/event/".$site."/panel';</script>";
+
+	}
+	
+
+});  
 
 $app->get("/event/:site/panel/activities/", function($site) {
 
@@ -295,11 +375,104 @@ $app->get("/event/:site/panel/activities/", function($site) {
 
 	$idparticipant = $participant->getidparticipant();
 
-	var_dump($idparticipant);
+ 	$events = new Event();
 
-	$page = new PageParticipant($site);
+ 	$url = $events->getUrl($site);
 
-	$page->setTpl("activities");
+ 	$event = $events->listEventData($site);
+
+ 	$results = Event::checkList($event);
+
+ 	$data2 = $results[0];
+
+ 	$listActivities = Activities::listEventActivities($idparticipant);
+
+ 	$checkStatus = Participant::checkStatus($idparticipant);
+
+	if ($checkStatus == 1)
+	{
+		$page = new PageParticipant($site);
+
+		$page->setTpl("activities", [
+			"participant" => $participant->getValues(),
+			"event" => $data2,
+			"activity" => $listActivities,
+		]);
+
+	}
+	else
+	{
+		
+		echo "<script>alert('Pagamento não confirmado!');</script>";
+		echo "<script>location.href='/event/".$site."/panel';</script>";
+
+	}
+	
+
+}); 
+
+$app->post("/event/:site/panel/activities/:idactivity", function($site, $idactivity) {
+
+	Participant::verifyLogin($site);
+
+	if(isset($_POST['submit']))
+	{
+		//var_dump(Activities::checkVacancies($idactivity));
+
+		$participant = Participant::getFromSession();
+
+		$idparticipant = $participant->getidparticipant();
+
+		$events = new Event();
+
+	 	$event = $events->listEventData($site);
+
+	 	$data = $event[0];
+
+	 	// var_dump($data['idevent']);
+
+	 	// var_dump($idparticipant);
+
+	 	// var_dump($idactivity);
+
+		if(Activities::checkVacancies($idactivity))
+		{
+
+			echo "<script>alert('Número de vagas excedido!');</script>";
+			echo "<script>location.href='/event/".$site."/panel/activities/';</script>";
+
+		}else
+		{
+
+			$results = Participant::checkSubActivity($idparticipant,$idactivity);
+
+			if($results == 1)
+			{
+
+				echo "<script>alert('Você já está inscrito nesta atividade!');</script>";
+				echo "<script>location.href='/event/".$site."/panel/activities/';</script>";
+
+			}
+			else{
+
+				Participant::registerActivity($idparticipant, $idactivity, $data['idevent']);
+
+				echo "<script>alert('Parabéns, você foi inscrito na atividade!');</script>";
+				echo "<script>location.href='/event/".$site."/panel/activities/';</script>";
+			}
+
+		}
+
+		
+
+
+
+	}
+
+
+	
+	
+
 
 }); 
 
@@ -321,12 +494,27 @@ $app->get("/event/:site/payment", function($site) {
 
  	$data = $results[0];
 
-	$page = new PageParticipant($site);
+ 	$status = $participant->getstatus();
 
-	$page->setTpl("payment", [
-		"participant" => $participant->getValues(),
-		"event" => $data,
-	]);
+ 	if($status == 0)
+ 	{
+
+		$page = new PageParticipant($site);
+
+		$page->setTpl("payment", [
+			"participant" => $participant->getValues(),
+			"event" => $data,
+		]);
+
+ 	} else
+ 	{
+
+ 		// echo "<script>alert('Seu pagamento já foi aprovado!');</script>";
+ 		header('Location: /event/'.$site.'/panel');
+		exit;
+ 	}
+
+	
 
 }); 
 

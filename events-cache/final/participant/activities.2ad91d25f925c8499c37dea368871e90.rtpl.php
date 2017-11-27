@@ -53,7 +53,7 @@
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
-        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/activities"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/subactivities/"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
       </ul>
@@ -82,6 +82,9 @@
     <div class="col-md-12">
       <div class="box box-primary">
 
+                
+             
+
             <div class="box-body no-padding">
               <table class="table table-striped">
                  <thead>
@@ -99,25 +102,29 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <!-- <?php $counter1=-1;  if( isset($activity) && ( is_array($activity) || $activity instanceof Traversable ) && sizeof($activity) ) foreach( $activity as $key1 => $value1 ){ $counter1++; ?> -->
+                  <?php $counter1=-1;  if( isset($activity) && ( is_array($activity) || $activity instanceof Traversable ) && sizeof($activity) ) foreach( $activity as $key1 => $value1 ){ $counter1++; ?>
                 <tr>
-                 <!--  <td><?php echo utf8_encode($value1["activity_name"]); ?></td>
+                  <td><?php echo utf8_encode($value1["activity_name"]); ?></td>
                   <td><?php echo utf8_encode($value1["description"]); ?></td>
                   <td><?php echo htmlspecialchars( $value1["activity_type"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $value1["data_activity"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $value1["initial_hour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $value1["end_hour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $value1["subscribes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                  <td><?php echo htmlspecialchars( $value1["vacancies"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td> -->
+                  <td><?php echo htmlspecialchars( $value1["vacancies"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 
                    <td>
-                   <p> <a href="" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Inscrever-se</a></p>
+                    <form action="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/activities/<?php echo htmlspecialchars( $value1["idactivity"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="POST">
+                   <p> <button type="submit" name="submit"  class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Inscrever-se</button></p>
+                  </form>
+
                   </td>
                   
                 </tr>
 
-               <!--  <?php } ?> -->
-                </tbody>            
+                <?php } ?>
+                </tbody>  
+
               </table>
             </div>
           </div>

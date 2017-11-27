@@ -140,7 +140,7 @@ class Participant extends Model {
 
 		if (count($results) === 0)
 		{
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			return Message::setErrorRegister("Usuário inexistente ou senha inválida.");
 		}
 
 		$data = $results[0];
@@ -159,7 +159,7 @@ class Participant extends Model {
 			return $participant;
 
 		} else {
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			return Message::setErrorRegister("Usuário inexistente ou senha inválida.");
 		}
 
 	}
@@ -207,7 +207,14 @@ class Participant extends Model {
 	public static function checkStatus($idparticipant)
 	{
 
+		$sql = new Sql();
 
+		$results = $sql->query("SELECT * FROM tb_participants WHERE idparticipant= :idparticipant  AND status = 1",array(
+			":idparticipant" => $idparticipant
+
+		));
+
+		return $results;
 
 	}
 
@@ -254,18 +261,50 @@ class Participant extends Model {
 
 	}
 
-	public static function checkVacancies($site)
+	public static function checkSubActivity($idparticipant, $idactivity)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_event  WHERE site = :site 
-			AND subscribes = vacancies AND vacancies > 0 AND subscribes > 0", [
-			':site'=>$site,
-		]);
+		$results = $sql->select("SELECT * FROM tb_participants_activities WHERE participant_id = :idparticipant AND activity_id = :idactivity", array(
+			":idparticipant" => $idparticipant,
+			":idactivity" => $idactivity
+		));
+		
+		return count($results);
 
-		return (count($results) > 0);
+		
+	}
 
+	public static function listSubActivities($idparticipant)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT activity_name, description, activity_type, data_activity, initial_hour, end_hour FROM tb_activities a, tb_participants_activities b WHERE a.idactivity = b.activity_id  AND b.participant_id = :idparticipant", array(
+			":idparticipant" => $idparticipant
+		));
+
+		return $results;
+
+	}
+
+
+	public static function registerActivity($idparticipant, $idactivity, $idevent)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_register_activity(:participant_id, :activity_id, :event_id)", 
+			array(
+			":participant_id"=> $idparticipant,
+			":activity_id"=> $idactivity,
+			":event_id"=> $idevent,
+		));
+
+		return count($results);
+
+		
 	}
 
 	public static function getPasswordHash($password)

@@ -82,6 +82,34 @@ class Event extends Model {
 
 	}
 
+	public static function exportParticipantList($idevent)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_participants WHERE event_id = :idevent", array(
+			':idevent' => $idevent
+
+		));
+
+		return $results;
+
+	}
+
+	public static function checkVacancies($site)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_event  WHERE site = :site 
+			AND subscribes = vacancies AND vacancies > 0 AND subscribes > 0", [
+			':site'=>$site,
+		]);
+
+		return (count($results) > 0);
+
+	}
+
 	public static function confirmedPayment($event_id)
 	{
 
