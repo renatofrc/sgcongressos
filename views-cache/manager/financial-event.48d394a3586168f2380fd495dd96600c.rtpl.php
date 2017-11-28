@@ -32,7 +32,7 @@
                 <tbody>
                 
                 <tr>
-                  <td><?php echo htmlspecialchars( $event["event_name"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo utf8_encode($event["event_name"]); ?></td>
                   <td><?php echo htmlspecialchars( $event["subscribes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $confirmedPayment, ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <?php if( $money["available_money"] == NULL ){ ?>

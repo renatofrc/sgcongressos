@@ -82,6 +82,20 @@ class Event extends Model {
 
 	}
 
+	public static function getManagerData($site)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT desname, desemail, event_name FROM tb_users a INNER JOIN tb_event b  WHERE b.site = :site AND b.create_user_id = a.iduser", array(
+			":site" => $site
+
+		));
+
+		return $results;
+
+	}
+
 	public static function checkVacancies($site)
 	{
 

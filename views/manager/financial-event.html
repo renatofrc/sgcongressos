@@ -32,7 +32,7 @@
                 <tbody>
                 
                 <tr>
-                  <td>{$event.event_name}</td>
+                  <td>{function="utf8_encode($event.event_name)"}</td>
                   <td>{$event.subscribes}</td>
                   <td>{$confirmedPayment}</td>
                   {if="$money.available_money == NULL"}

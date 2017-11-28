@@ -10,7 +10,7 @@ use \SG\Model\Event;
 class User extends Model {
 
 	const SESSION = "User";
-	const SECRET = "sg_hash";
+	const SECRET = "SistemaGerenciador_Hash_";
 
 	public static function getFromSession()
 	{
@@ -24,6 +24,20 @@ class User extends Model {
 		}
 
 		return $user;
+
+	}
+
+	public static function getUserById($iduser)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_users WHERE iduser = :iduser", array(
+			":iduser" => $iduser
+
+		));
+
+		return $results;
 
 	}
 
@@ -60,7 +74,7 @@ class User extends Model {
 
 		if (count($results) === 0)
 		{
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			return Message::setErrorRegister("Usuário inexistente ou senha inválida.");
 		}
 
 		$data = $results[0];
@@ -79,7 +93,7 @@ class User extends Model {
 			return $user;
 
 		} else {
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			return Message::setErrorRegister("Usuário inexistente ou senha inválida.");
 		}
 
 	}
@@ -342,7 +356,6 @@ class User extends Model {
 			SELECT * 
 			FROM tb_userspasswordsrecoveries a
 			INNER JOIN tb_users b USING(iduser)
-			INNER JOIN tb_persons c USING(idperson)
 			WHERE 
 				a.idrecovery = :idrecovery
 			    AND

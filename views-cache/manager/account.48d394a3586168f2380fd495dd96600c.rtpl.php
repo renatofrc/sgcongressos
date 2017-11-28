@@ -24,7 +24,7 @@
         <!-- /.box-header -->
         <!-- form start -->
         <?php $counter1=-1;  if( isset($event) && ( is_array($event) || $event instanceof Traversable ) && sizeof($event) ) foreach( $event as $key1 => $value1 ){ $counter1++; ?>
-        <form role="form" action="/manager/financial/<?php echo htmlspecialchars( $value1["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+        <form role="form" action="/manager/financial/request/<?php echo htmlspecialchars( $value1["idevent"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/bank/" method="post">
           <?php } ?>
           <div class="box-body">
              <?php if( $registerError!='' ){ ?>

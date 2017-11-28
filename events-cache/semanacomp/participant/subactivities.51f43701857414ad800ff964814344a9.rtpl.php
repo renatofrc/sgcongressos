@@ -48,13 +48,13 @@
       
 
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
+       <ul class="sidebar-menu">
       
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/subactivities/"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
-        <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/submit/"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
       </ul>
       <!-- /.sidebar-menu -->
@@ -103,7 +103,7 @@
                  <?php $counter1=-1;  if( isset($listActivities) && ( is_array($listActivities) || $listActivities instanceof Traversable ) && sizeof($listActivities) ) foreach( $listActivities as $key1 => $value1 ){ $counter1++; ?>
                 <tr>
                   <td><?php echo htmlspecialchars( $value1["activity_name"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                  <td><?php echo htmlspecialchars( $value1["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                  <td><?php echo utf8_encode($value1["description"]); ?></td>
                   <td><?php echo htmlspecialchars( $value1["activity_type"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $value1["data_activity"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   <td><?php echo htmlspecialchars( $value1["initial_hour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

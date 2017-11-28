@@ -376,7 +376,7 @@ $app->get("/manager/financial/request/:idevent", function($idevent) {
 
 });
 
-$app->get("/manager/financial/request/:idevent/bank", function($idevent) {
+$app->get("/manager/financial/request/:idevent/bank/", function($idevent) {
 
 	User::verifyLogin();
 
@@ -426,7 +426,7 @@ $app->get("/manager/financial/request/:idevent/bank", function($idevent) {
 
 });
 
-$app->post("/manager/financial/request/:idevent/bank", function($idevent) {
+$app->post("/manager/financial/request/:idevent/bank/", function($idevent) {
 
 	User::verifyLogin();
 
@@ -434,38 +434,38 @@ $app->post("/manager/financial/request/:idevent/bank", function($idevent) {
 
 	if (!isset($_POST['bank_name']) || $_POST['bank_name']=='') {
 		Message::setErrorRegister("Digite o nome do banco.");
-		header('Location: /manager/financial/'.$idevent);
+		header('Location: /manager/financial/request/'.$idevent.'/bank');
 		exit;
 	}
 
 	if (!isset($_POST['agency']) || $_POST['agency']=='') {
 		Message::setErrorRegister("Digite a agencia.");
-		header('Location: /manager/financial/'.$idevent);
+		header('Location: /manager/financial/request/'.$idevent.'/bank');
 		exit;
 	}
 
 	if (!isset($_POST['account']) || $_POST['account']=='') {
 		Message::setErrorRegister("Digite a conta");
-		header('Location: /manager/financial/'.$idevent);
+		header('Location: /manager/financial/request/'.$idevent.'/bank');
 		exit;
 	}
 
 
 	if (!isset($_POST['cpf_cnpj']) || $_POST['cpf_cnpj']=='') {
 		Message::setErrorRegister("Digite o CPF ou CNPJ.");
-		header('Location: /manager/financial/'.$idevent);
+		header('Location: /manager/financial/request/'.$idevent.'/bank');
 		exit;
 	}
 
 	if (!isset($_POST['holder_name']) || $_POST['holder_name']=='') {
 		Message::setErrorRegister("Digite a data final.");
-		header('Location: /manager/financial/'.$idevent);
+		header('Location: /manager/financial/request/'.$idevent.'/bank');
 		exit;
 	}
 
 	if (!isset($_POST['phone']) || $_POST['phone']=='') {
 		Message::setErrorRegister("Digite um telefone para contato.");
-		header('Location: /manager/financial/'.$idevent);
+		header('Location: /manager/financial/request/'.$idevent.'/bank');
 		exit;
 	}
 
@@ -483,7 +483,7 @@ $app->post("/manager/financial/request/:idevent/bank", function($idevent) {
 
 	$users->addBank($iduser);
 
-	header('Location: /manager/financial/'.$idevent);
+	header('Location: /manager/financial/request/'.$idevent.'/bank');
 
 	exit;
 

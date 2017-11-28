@@ -45,12 +45,18 @@
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+          <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
     <!-- /.social-auth-links -->
+
+    <?php if( $registerError!='' ){ ?>
+                <div class="alert alert-danger">
+                    <?php echo htmlspecialchars( $registerError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+                <?php } ?>
 
     <a href="/manager/forgot">Esqueceu a senha?</a><br>
     <a href="/manager/register" class="text-center">Registre-se</a>

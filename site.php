@@ -11,6 +11,7 @@ use \SG\DB\Sql;
 use \SG\PagSeguro\Config;
 use \SG\Model\Payment;
 use \SG\Model\Activities;
+use \SG\MailSubmit;
 use Rain\Tpl;
 
 $app->get('/', function() {
@@ -737,6 +738,95 @@ $app->post("/event/:site/card", function($site) {
 
 	}
 
+
+});
+
+$app->get("/event/:site/panel/submit/", function($site) {
+
+	Participant::verifyLogin($site);
+
+	$participant = Participant::getFromSession();
+
+	$idparticipant = $participant->getidparticipant();
+
+	$results = Payment::checkPayment($idparticipant);
+
+	$events = new Event();
+
+ 	$url = $events->getUrl($site);
+
+ 	$event = $events->listEventData($site);
+
+ 	$result = Event::checkList($event);
+
+ 	$data = $result[0];
+
+ 	$checkStatus = Participant::checkStatus($idparticipant);
+
+	if ($checkStatus == 1)
+	{
+
+		$page = new PageParticipant($site);
+
+		$page->setTpl("submit", [
+			"participant" => $participant->getValues(),
+			"event" => $data,
+			"msgError"=> Message::getError(),
+		]);
+	}
+
+	else
+	{
+		
+		echo "<script>alert('Pagamento não confirmado!');</script>";
+		echo "<script>location.href='/event/".$site."/panel';</script>";
+
+	}
+	
+
+});
+
+$app->post("/event/:site/panel/submit/", function($site) {
+
+	Participant::verifyLogin($site);
+
+	if(isset($_POST['submit']))
+	{
+
+		if (!isset($_POST['name']) || $_POST['name']=='') {
+			Message::setError("Preencha o seu nome.");
+			header('Location: /event/'.$site.'/panel/submit/');
+			exit;
+		}
+
+		if (!isset($_POST['email']) || $_POST['email']=='') {
+			Message::setError("Preencha o seu nome.");
+			header('Location: /event/'.$site.'/panel/submit/');
+			exit;
+		}
+
+		
+	}
+
+	$results = Event::getManagerData($site);	
+
+	foreach ($results as $key => $value) {
+		$email = $value['desemail'];
+		$destName = $value['desname'];
+		$event_name = $value['event_name'];
+
+
+		$mail = new MailSubmit($email, $destName, $_POST['name'], $_POST['email'], $event_name, $_FILES['archive']);
+
+		$mail->send();
+
+		echo "<script>alert('Trabalho enviado com sucesso!');</script>";
+		echo "<script>location.href='/event/".$site."/panel';</script>";
+
+	}
+
+	
+		
 
 });
 

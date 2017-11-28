@@ -41,22 +41,24 @@ $app->get('/manager/profile/:iduser', function($iduser) {
 
 	$userid = $users->getiduser();
 
-		if($userid == $iduser){
+	$user = User::getUserById($iduser);
 
-			$page = new PageManager();
+	if($userid == $iduser){
 
-			$page->setTpl("profile",[
-			'user' => $users->getValues()
-			]);
+		$page = new PageManager();
 
-		}
-		else{
+		$page->setTpl("profile",[
+		'user' => $user[0]
+		]);
 
-			$page = new PageManagerError();
+	}
+	else{
 
-			$page->setTpl("404");
+		$page = new PageManagerError();
 
-		}
+		$page->setTpl("404");
+
+	}
 
 });
 
@@ -84,7 +86,10 @@ $app->get('/manager/login', function() {
 		"footer"=>false
 	]);
 
-	$page->setTpl("login");
+	$page->setTpl("login",[
+	'registerError'=>Message::getErrorRegister()
+
+	]);
 
 });
 
@@ -153,6 +158,30 @@ $app->post("/manager/register", function() {
 
 
 $app->post('/manager/login', function() {
+
+
+	if(isset($_POST['submit']))
+  	{
+
+		if(!isset($_POST['login']) || $_POST['login']=='')
+	  	{
+
+	  		Message::setErrorRegister('Digite seu login');
+	  		header("Location: /manager/login");
+	  		exit;
+
+	  	}
+	  	if(!isset($_POST['password']) || $_POST['password']=='')
+	  	{
+
+	  		Message::setErrorRegister('Digite sua senha');
+	  		header("Location: /manager/login");
+	  		exit;
+
+	  	}
+
+
+  	} 
 
 	User::login($_POST["login"], $_POST["password"]);
 

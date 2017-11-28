@@ -49,12 +49,13 @@
       
 
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
+       <ul class="sidebar-menu">
       
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel"><i class="fa fa-home"></i> <span>Home</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/payment"><i class="fa fa-bookmark"></i> <span>Pagamento</span></a></li>
         <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/subactivities/"><i class="fa fa-bookmark"></i> <span>Atividades</span></a></li>
-        <li><a href="#"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
+        <li><a href="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/submit/"><i class="fa fa-briefcase"></i> <span>Submeter</span></a></li>
         
       </ul>
       <!-- /.sidebar-menu -->
@@ -67,7 +68,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Profile
+   Submeter trabalho
   </h1>
 </section>
 
@@ -75,58 +76,56 @@
 <section class="content">
 
   <div class="row">
-  	<div class="col-md-12">
-  		<div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Editar Perfil</h3>
-        </div>
+    <div class="col-md-12">
+      <div class="box box-primary">
+
+        <div class="box-body">
+                 <?php if( $msgError!='' ){ ?>
+                    <div class="alert alert-danger">
+                        <?php echo htmlspecialchars( $msgError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                    </div>
+                    <?php } ?>
+        
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/<?php echo htmlspecialchars( $participant["idparticipant"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+          <form role="form" action="/event/<?php echo htmlspecialchars( $event["site"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/panel/submit/" method="post" enctype="multipart/form-data">
+
+
           <div class="box-body">
             <div class="form-group">
-              <label for="pname">Nome</label>
-              <input type="text" class="form-control" id="pname" name="pname" placeholder="Digite o nome" value="<?php echo htmlspecialchars( $participant["pname"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="form-group">
-              <label for="cpf">CPF</label>
-              <input type="text" class="form-control" id="cpf" name="cpf" placeholder="Digite o CPF"  value="<?php echo htmlspecialchars( $participant["cpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="form-group">
-              <label for="nrphone">Telefone</label>
-              <input type="tel" class="form-control" id="phone" name="phone" placeholder="Digite o telefone"  value="<?php echo htmlspecialchars( $participant["phone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="form-group">
-              <label for="email">E-mail</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Digite o email" value="<?php echo htmlspecialchars( $participant["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="form-group">  
-            <select class="form-control" id="sel1" name="category" >
-              <option selected disabled>Selecione a categoria</option>
-              <option value="Estudante">Estudante</option>
-              <option value="Professor">Professor</option>
-              <option value="Outros">Outros</option>
-            </select>
-          </div>
-            <div class="form-group">
-              <label for="login">Login</label>
-              <input type="text" class="form-control" id="login" name="login" placeholder="Digite o login" value="<?php echo htmlspecialchars( $participant["login"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <label for="desname">Digite seu nome</label>
+              <input type="text" class="form-control" id="name" name="name" class="form-control input-lg" >
             </div>
 
-
-            <div class="checkbox">
+            <div class="box-body">
+            <div class="form-group">
+              <label for="desname">Digite seu e-mail</label>
+              <input type="text" class="form-control" id="email" name="email" class="form-control input-lg" >
+            </div>
             
-          </div>
+            <div class="form-group">
+              <label for="file">Anexar trabalho aqui</label>
+              <input type="file" class="form-control" id="file" name="archive">
+              
+            </div>
+           
+           
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" name="submit" class="btn btn-success">Enviar trabalho</button>
           </div>
         </form>
+
+
       </div>
-  	</div>
+    </div>
   </div>
 
 </section>
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+
+
+ 

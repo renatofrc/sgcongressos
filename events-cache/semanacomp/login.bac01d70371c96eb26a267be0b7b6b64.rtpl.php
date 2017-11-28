@@ -50,8 +50,8 @@
         <!-- /.col -->
       </div>
     </form>
-    <!-- /.social-auth-links -->
-
+    <!--  /.social-auth-links -->
+<br>
      <?php if( $registerError!='' ){ ?>
                 <div class="alert alert-danger">
                     <?php echo htmlspecialchars( $registerError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
